@@ -1,0 +1,410 @@
+<html>
+<head>
+<title>Offline Record Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
+
+<body style ="background-color:	#FFE4E1">
+
+<div class="Heading">
+<h6>Offline record management system</h6> 
+<div class="logo"></div>
+</div>
+
+<div class="messagebox">
+<span class="Text1"> Welcome to the offline record management system ! You can add and store records and files here! </span>
+</div>
+
+</head>
+<script src="eel.js"></script>
+
+<body>
+
+<div class="Input_section">
+  
+  <form action="/AddInfo.html" id ="record">
+  
+  <fieldset style="border:3px solid black;">
+  <legend>Add a record ++</legend>
+  
+  <label for="Description" style="font-size:40px;">Description:</label>
+  <input type="text" id="Description" class="Description" required><br><br>
+  
+  <label for="Amount" style="font-size:40px;">Amount:</label>
+  <input type="number" id="Amount" class="Amount" min="0" required><br>
+  
+  <label for="Source" style="font-size:40px; position:absolute; top:38%; left:48%;">Source:</label>
+  <input type="text" id="Source" class="Source" required"><br><br>
+
+  <button type="submit" class="button" id="SubmitAns" onclick="callPython()" style="top:80%; left:65%; width:20%">Submit</button>
+  <button type="reset"  id="reset" class="button"  style="left:6%; top:55%; ">Reset</button>
+  
+  </fieldset>
+  </form>
+  
+
+  <div class="Selection" id="selection" style=" position:absolute; left:110%; top:0%; height:100%; border-radius:20px;">
+  
+  <form>
+  <fieldset id="LProjects" style="border:3px solid black; font-size:20px;">
+  <legend>Projects</legend>
+  </fieldset>
+  <button type="submit" id="Add_button" class="button" onclick="Add_File()" style="top:80%; left:6%; width:30%">Add</button>
+  <button type="submit"  id="Del_button" class="button"  onclick="Del_File()" style="left:60%; top:80%; width:30%">Delete</button>
+  </div>
+  
+
+</div>
+
+</body>
+
+<style>
+*{
+	padding:10;
+	margin:10;
+	font-family: 'Stylish', sans-serif;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
+
+.Heading{
+	width:98.95%;
+	height:8%;
+	position:absolute;
+	top:0%;
+	left:0%;
+	background-color: #3CB371;
+	border: 1px solid black;
+	margin: auto;
+	text-align: center;
+	color: white;
+	font-size: 70px;
+	text-vertical-align: text-top;
+}
+
+.logo{
+  background: url(BG.ico);
+  background-size:100%;
+  background-repeat: no-repeat;
+  display: block;
+  position: absolute;
+  left: 50;
+  top:0;
+  width:70px;
+  height:70px;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
+.messagebox{
+ position:absolute;
+ left:-0.5%;
+ top:9%;
+ background-color:#4682B4;
+ width:99.1%;
+ height: 2%;
+ text-align:center;
+}
+
+.messagebox span {
+  display: block;
+  margin:-10;
+  position:relative; 
+  font-size: 20px;
+}
+
+.Text1{
+ color: white;
+}
+
+.Input_section{
+	width:50%;
+	height:70%;
+	position:absolute;
+	top:17%;
+	left:2%;
+	background-color: #e9ffdb;
+	border: 3px solid black;
+	margin: auto;
+	color: black;
+	font-size: 80px;
+	border-radius:20px;
+}
+
+.selection{
+   	width:700px;
+	height: 300px;
+	position:absolute;
+	top:305;
+	left:1000;
+	background-color: #D5F5E3;
+	border: 1px solid black;
+	margin: auto;
+	border-radius: 15px;
+	color: black;
+	text-align:left;
+	font-size:20px;
+}
+
+.checkbox{
+  width:30px;
+  height:30px;
+}
+
+.Description{
+    position: absolute; 
+	width:60%;
+	border-radius:10px;
+	font-size: 15px;
+}
+
+.Amount{
+    position: absolute; 
+	width:20%;
+	border-radius:10px;	
+	font-size: 15px;
+}
+
+.Source{
+    position: absolute; 
+	width:25%;
+	top:40%;
+	left:62%;
+	border-radius:10px;	
+	font-size: 15px;	
+}
+
+.button{
+    position:absolute; 
+	width:10%;
+	height:8%;
+	top:75%;
+	left:65%;
+	background-color:#F0FFF0;
+	border-radius:20px;	
+	font-size:20px;
+	color:black;
+}
+
+button:hover{
+  background-color: #98FB98;
+   font-size:30px;
+   border-width: 5px;
+}
+
+</style>
+
+<script>
+
+    var arryN = []
+	var arryS =[]
+	eel.expose(Receive_Info);
+	
+
+	function Receive_Info(x,y)
+	{    
+        if (localStorage.getItem('arryN')== null){
+		    LoadArrayToLS(x,y);
+		}    	
+	}  
+	
+	function Add_File(){
+	  
+	  var Name = getInfoName();
+	  
+	  if (Name == null){
+	  
+	  }
+	  else{
+	    var Source = getInfoSource(Name);
+		eel.Add_file(Name,Source)
+		
+		var N1 = localStorage.getItem('arryN');
+		var N1A = JSON.parse(N1);
+		var N2 = localStorage.getItem('arryS');
+		var N2A = JSON.parse(N2);
+		
+		N1A.push(Name);
+		N2A.push(Source);
+		LoadArrayToLS(N1A,N2A);
+	  }
+	}
+	
+	function checkName(x){
+	   var N1 = localStorage.getItem('arryN');
+	   var N1A = JSON.parse(N1);
+	   
+	   for (var i = 0; i < N1A.length; i++){
+          if (N1A[i].toLowerCase() == x.toLowerCase()){
+		    return true;
+		  }	   
+	   }
+	}
+	
+	function getInfoName(x) {
+	  while(true){
+	    var x = window.prompt("Enter the name of the file: ");
+		var checker = false;
+		
+		if (x == ""){
+		  alert("You did not write anything!");
+	    }else{
+		  checker = checkName(x);
+		  if (checker){alert ("This name already exist ! Try a different name.");
+		  }else{break;}
+		}
+		 
+ 	  }
+	  return x;
+	}
+	
+	function getInfoSource(N) {
+	  x = N+'.csv'
+	  return x;
+	}
+	
+	function Del_File(){
+	  var Name = window.prompt("Enter the name of the file: ");
+	  var Source;
+	  var N1 = localStorage.getItem('arryN');
+	  var N1A = JSON.parse(N1);
+	  var N2 = localStorage.getItem('arryS');
+	  var N2A = JSON.parse(N2);
+	  var found = false;
+	  
+	  for (var i = 0; i < N1A.length; i++){
+	    if (N1A[i] == Name){
+		   console.log(N1A[i]);
+		   N1A.splice(i,1);
+		   Source = N2A[i];
+		   N2A.splice(i,1);
+		   eel.Del_file(Name,Source)
+		   LoadArrayToLS(N1A,N2A);
+		   found = true;
+		}
+	  }
+		
+		if (found == false){
+		 alert("The file you want to delete is missing !");
+		}	
+	  
+	}
+	
+	LoadArrayToLS = function(x,y){
+	   localStorage.setItem('arryN',JSON.stringify(x));
+	   localStorage.setItem('arryS',JSON.stringify(y));
+	}
+	
+	arry1 = localStorage.getItem('arryN');
+	arryN = JSON.parse(arry1);
+	arry2 = localStorage.getItem('arryS');
+	arryS = JSON.parse(arry2);
+	
+	LoadProject();
+	function LoadProject(){
+	 
+	    var f = document.getElementById("LProjects");
+		
+		var br = document.createElement("br");
+	    for (a in arryN){
+		
+		  const i = document.createElement("input");
+		  i.setAttribute('type', "checkbox");
+		  i.setAttribute('id', arryN[a]);
+		  
+		  var newlabel = document.createElement("Label");
+		  newlabel.setAttribute("for",arryN[a]);
+		  newlabel.innerHTML = ' '+arryN[a];
+		  
+		  const S = document.createElement("Select");
+		  S.setAttribute("id",arryN[a]+"Type");
+		  
+		  var Opt1 = document.createElement("option");
+		  Opt1.setAttribute("value","Credit");
+		  Opt1.innerHTML = "Credit";
+		  
+		  var Opt2 = document.createElement("option");
+		  Opt2.setAttribute("value","Debit");
+		  Opt2.innerHTML = "Debit";
+
+		  S.appendChild(Opt1);
+		  S.appendChild(Opt2);
+		  f.appendChild(i);
+		  f.appendChild(S);
+		  f.appendChild(newlabel);
+          f.appendChild(br.cloneNode());		  
+		}
+
+	}
+	
+	
+	function callPython(){
+	    var pcCount = 0;
+	    des = document.getElementById("Description").value;
+	    am = document.getElementById("Amount").value;
+	    src = document.getElementById("Source").value;
+
+		for (i in arryN){
+		  var pc = ProjectCheck(arryN[i]);
+		  
+		  if (pc){
+		     ty = TypeCheck(arryN[i]);
+			 pcCount++;
+			 eel.Add_record(des,am,ty,src,arryS[i])
+		  }
+		}
+		
+    }
+	
+	function TypeCheck(x){
+	 val = document.getElementById(x+"Type").value;
+	 console.log(val);
+	 return val;
+	}
+	
+	function ProjectCheck(x){
+	   const cb = document.querySelector('#'+x);
+	   if (cb.checked == true){
+		 return true;
+		}
+	}
+	
+	Check_Fill = function(){
+	  var Des = document.getElementById("Description").value;
+	  var Amt = document.getElementById("Amount").value;
+	  var Src = document.getElementById("Source").value;
+	  var Sub = document.querySelector("#SubmitAns");
+	  var add = document.querySelector("#Add_button");
+	  var Del = document.querySelector("#Del_button");
+	  var pcCount = 0;
+	  
+	  for (i in arryN){
+		  var pc = ProjectCheck(arryN[i]);
+		  
+		  if (pc){
+			 pcCount++;
+		  }
+		}
+	  
+	  if (Des == "" || Amt == "" || Src =="" || pcCount == 0){
+	    Sub.disabled = true;
+	  }else{
+	    Sub.disabled = false;
+	  }
+	  
+	  if (Des == "" && Amt == "" && Src =="" ){
+	    add.disabled = false;
+		Del.disabled = false;
+	  }else{
+	    add.disabled = true;
+		Del.disabled = true;
+	  }
+	}
+	  
+	
+	setInterval(Check_Fill,10);
+</script>
+
+</html>
