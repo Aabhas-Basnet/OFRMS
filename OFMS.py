@@ -6,7 +6,7 @@ eel.init('web')
 
 Names = []
 Sources = []
-Sname = "C:/Users/aabhas/Desktop/Saved/"
+Sname = "Saved/"
 
 
 def Load():
@@ -21,8 +21,8 @@ def Load():
 
 @eel.expose
 def Add_record(des,am,ty,src,uid):
-    f = open ("C:/Users/aabhas/Desktop/Saved/" +uid,'a')
-    f1 = open ("C:/Users/aabhas/Desktop/Saved/" +uid,'r')
+    f = open ("Saved/" +uid,'a')
+    f1 = open ("Saved/" +uid,'r')
     Line = f1.readline()
     Time = date.today()
     f.write(str(Time)+','+des+','+am+','+src+','+str(ty)+'\n')
@@ -61,4 +61,4 @@ def Del_file (x,y):
     f3.close()
 
 eel.Receive_Info(Names,Sources)
-eel.start('AddInfo.html', size=(300,200)) 
+eel.start('Index.html', size=(300,200)) 

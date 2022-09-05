@@ -1,0 +1,72 @@
+<html>
+
+<head>
+<title>Offline Record Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="OFRMS.css">
+<script src="eel.js"></script>
+</head>
+
+<body>
+
+<div class="Top">
+<h1>Offline record management system</h1> 
+</div>
+<h2 id="Welcome_Text" > Welcome to the offline record management system ! You can add and store records and files here! </h2>
+
+<div class="Input_section">
+
+  <div class="Input">
+  
+  <form action="/AddInfo.html" id ="record">
+  
+  <fieldset id="Input">
+  <legend>Add a record ++</legend>
+  
+  <div class="sec">
+  <label for="Description">Description:</label>
+  <input type="text" id="Description" class="Description" required>
+  </div>
+  
+  <div class="sec">
+  <label for="Amount">Amount:</label>
+  <input type="number" id="Amount" class="Amount" min="0" required>
+  </div>
+  
+  <div class="sec">
+  <label for="Source">Source:</label>
+  <input type="text" id="Source" class="Source" required">
+  </div>
+
+  <div class="sec">
+  <button type="submit" class="button" id="SubmitAns" onclick="callPython()">Submit</button>
+  <button type="reset"  id="reset" class="button" >Reset</button>
+  </div>
+  
+  </fieldset>
+  </form>
+  
+  </div>
+  
+
+  <div class="Selection" id="selection">
+  
+  <form>
+  <fieldset id="LProjects">
+  <legend>Projects</legend>
+  </fieldset>
+  
+  <button type="submit" id="Add_button" class="button" onclick="Add_File()" >Add</button>
+  <button type="submit"  id="Del_button" class="button"  onclick="Del_File()">Delete</button>
+  
+  </div>
+  
+
+</div>
+
+</body>
+
+<script type="text/javascript" src="OFRMS.js"></script>
+</html>
